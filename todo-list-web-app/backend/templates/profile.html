@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul class="header-icons">
+                <li><a href="{{ url_for('main.index') }}"><img src="{{ url_for('static', filename='img/home.png') }}" alt="Home"></a></li>
+                <li><a href="{{ url_for('main.auth') }}"><img src="{{ url_for('static', filename='img/register.png') }}" alt="Registration"></a></li>
+                <li><a href="{{ url_for('main.profile') }}"><img src="{{ url_for('static', filename='img/profile.png') }}" alt="Profile"></a></li>
+                <li><a href="{{ url_for('main.tasks') }}"><img src="{{ url_for('static', filename='img/tasks.png') }}" alt="Tasks"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="container">
+        <h2>User Profile</h2>
+        <!-- Display user details here -->
+        <div id="user-details">
+            <p><strong>Username:</strong> {{ username }}</p>
+            <p><strong>Email:</strong> {{ email }}</p>
+            <!-- Add more details as needed -->
+        </div>
+    </div>
+</body>
+</html>

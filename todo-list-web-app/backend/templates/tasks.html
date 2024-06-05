@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tasks - Todo List</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul class="header-icons">
+                <li><a href="{{ url_for('main.index') }}"><img src="{{ url_for('static', filename='img/home.png') }}" alt="Home"></a></li>
+                <li><a href="{{ url_for('main.auth') }}"><img src="{{ url_for('static', filename='img/register.png') }}" alt="Registration"></a></li>
+                <li><a href="{{ url_for('main.profile') }}"><img src="{{ url_for('static', filename='img/profile.png') }}" alt="Profile"></a></li>
+                <li><a href="{{ url_for('main.tasks') }}"><img src="{{ url_for('static', filename='img/tasks.png') }}" alt="Tasks"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <footer class="footer mt-auto py-3 bg-light">
+        <div class="container">
+            <span class="text-muted">© 2024 ToDo List App</span>
+        </div>
+    </footer>
+    
+    <div class="container">
+        <h1>Tasks</h1>
+        <div class="home-section">
+            <h2>Welcome to Your Todo List</h2>
+            <p>Stay organized and get things done!</p>
+            <ul class="task-list">
+                <li class="task-item">Task 1</li>
+                <li class="task-item">Task 2</li>
+                <li class="task-item">Task 3</li>
+                <!-- Add more tasks as needed -->
+            </ul>
+        </div>
+</body>
+</html>

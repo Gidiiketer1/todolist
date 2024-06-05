@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login/Register</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+    
+        header {
+            background: #333;
+            color: #fff;
+            padding: 1em 0;
+            text-align: center;
+        }
+    
+        nav ul {
+            list-style: none;
+            padding: 0;
+        }
+    
+        nav ul li {
+            display: inline-block;
+            margin-right: 20px;
+        }
+    
+        nav ul li:last-child {
+            margin-right: 0;
+        }
+    
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+        }
+    
+        .header-icons {
+            list-style: none;
+            padding: 0;
+            margin-top: 10px;
+            text-align: center;
+        }
+    
+        .header-icons li {
+            display: inline-block;
+            margin-right: 20px;
+        }
+    
+        .header-icons li:last-child {
+            margin-right: 0;
+        }
+    
+        .header-icons img {
+            width: 40px;
+            height: auto;
+            vertical-align: middle;
+            margin-right: 5px;
+        }
+    
+        .main-content {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 340px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-color: #e6f7ff; /* Light blue background */
+            margin-top: 50px;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin-top: 10px;
+            font-size: 16px;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"] {
+            padding: 10px;
+            margin-top: 15px;
+            border: 5px solid #ccc;
+            border-radius: 5px;
+            font-size: 17px;
+        }
+
+        .submit-btn {
+            margin-top: 25px;
+            padding: 15px 25px;
+            background-color: orange;
+            color: white;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            background-color: darkorange;
+        }
+
+        .tab {
+            display: none;
+        }
+
+        .tab.active {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .tab.active button {
+            margin-top: 15px;
+        }
+
+        .error {
+            color: red;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        /* Added styles for aligning buttons */
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 25px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul class="header-icons">
+                <li><a href="{{ url_for('main.index') }}"><img src="{{ url_for('static', filename='img/home.png') }}" alt="Home"></a></li>
+                <li><a href="{{ url_for('main.auth') }}"><img src="{{ url_for('static', filename='img/register.png') }}" alt="Registration"></a></li>
+                <li><a href="{{ url_for('main.profile') }}"><img src="{{ url_for('static', filename='img/profile.png') }}" alt="Profile"></a></li>
+                <li><a href="{{ url_for('main.tasks') }}"><img src="{{ url_for('static', filename='img/tasks.png') }}" alt="Tasks"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="container">
+        <div id="error-message" class="error"></div>
+        <h2><img src="todo-list-web-app/backend/static/img/register.png" alt="Registration"></h2>
+        <form id="auth-form" action="{{ url_for('main.auth') }}" method="POST">
+            <!-- Login Form -->
+            <div id="login-tab" class="tab active">
+                <label for="login-email">Email:</label>
+                <input type="email" id="login-email" name="email" required>
+                
+                <label for="login-password">Password:</label>
+                <input type="password" id="login-password" name="password" required>
+                
+                <div class="button-container">
+                    <button class="submit-btn" type="submit" name="action" value="login">
+                        Login
+                    </button>
+                    <button class="submit-btn" type="button" onclick="showTab('register-tab')">
+                        Register
+                    </button>
+                </div>
+            </div>
+
+            <!-- Register Form -->
+            <div id="register-tab" class="tab">
+                <label for="register-username">Username:</label>
+                <input type="text" id="register-username" name="username" required>
+                
+                <label for="register-email">Email:</label>
+                <input type="email" id="register-email" name="email" required>
+                
+                <label for="register-password">Password:</label>
+                <input type="password" id="register-password" name="password" required>
+                
+                <div class="button-container">
+                    <button class="submit-btn" type="submit" name="action" value="register">
+                        Register
+                    </button>
+                    <button class="submit-btn" type="button" onclick="showTab('login-tab')">
+                        Back to Login
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <script>
+        function showTab(tabId) {
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.getElementById(tabId).classList.add('active');
+        }
+
+        function displayError(message) {
+            const errorMessage = document.getElementById('error-message');
+            errorMessage.textContent = message;
+        }
+
+        // Sample logic to handle error messages and tab switching
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const error = urlParams.get('error');
+            const action = urlParams.get('action');
+
+            if (error) {
+                displayError(error);
+                if (action === 'login') {
+                    showTab('login-tab');
+                } else if (action === 'register') {
+                    showTab('register-tab');
+                }
+            }
+        });
+    </script>
+</body>
+</html>
