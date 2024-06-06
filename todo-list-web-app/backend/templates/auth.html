@@ -4,62 +4,62 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login/Register</title>
-    <link rel="stylesheet" href="styles.css">
     <style>
+        /* CSS Styles */
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
         }
-    
+
         header {
             background: #333;
             color: #fff;
             padding: 1em 0;
             text-align: center;
         }
-    
+
         nav ul {
             list-style: none;
             padding: 0;
         }
-    
+
         nav ul li {
             display: inline-block;
             margin-right: 20px;
         }
-    
+
         nav ul li:last-child {
             margin-right: 0;
         }
-    
+
         nav ul li a {
             color: #fff;
             text-decoration: none;
         }
-    
+
         .header-icons {
             list-style: none;
             padding: 0;
             margin-top: 10px;
             text-align: center;
         }
-    
+
         .header-icons li {
             display: inline-block;
             margin-right: 20px;
         }
-    
+
         .header-icons li:last-child {
             margin-right: 0;
         }
-    
+
         .header-icons img {
             width: 40px;
             height: auto;
             vertical-align: middle;
             margin-right: 5px;
         }
-    
+
         .main-content {
             padding: 20px;
             text-align: center;
@@ -96,7 +96,7 @@
         input[type="password"] {
             padding: 10px;
             margin-top: 15px;
-            border: 5px solid #ccc;
+            border: 1px solid #ccc;
             border-radius: 5px;
             font-size: 17px;
         }
@@ -136,7 +136,6 @@
             margin-bottom: 20px;
         }
 
-        /* Added styles for aligning buttons */
         .button-container {
             display: flex;
             justify-content: space-between;
@@ -157,7 +156,7 @@
     </header>
     <div class="container">
         <div id="error-message" class="error"></div>
-        <h2><img src="todo-list-web-app/backend/static/img/register.png" alt="Registration"></h2>
+        <h2>Login/Register</h2>
         <form id="auth-form" action="{{ url_for('main.auth') }}" method="POST">
             <!-- Login Form -->
             <div id="login-tab" class="tab active">
@@ -199,7 +198,9 @@
             </div>
         </form>
     </div>
+
     <script>
+        // JavaScript code
         function showTab(tabId) {
             document.querySelectorAll('.tab').forEach(tab => {
                 tab.classList.remove('active');
@@ -212,7 +213,6 @@
             errorMessage.textContent = message;
         }
 
-        // Sample logic to handle error messages and tab switching
         document.addEventListener('DOMContentLoaded', () => {
             const urlParams = new URLSearchParams(window.location.search);
             const error = urlParams.get('error');

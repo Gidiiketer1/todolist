@@ -23,7 +23,9 @@ def auth():
             db.session.add(new_user)
             db.session.commit()
             flash('User registered successfully', 'success')
-            return redirect(url_for('main.auth'))
+            login_user(new_user)  # Log in the user upon successful registration
+            return redirect(url_for('main.profile'))  # Redirect to profile page
+
         elif action == 'login':
             email = request.form.get('email')
             password = request.form.get('password')
@@ -31,7 +33,7 @@ def auth():
             if user and user.check_password(password):
                 login_user(user)
                 flash('Logged in successfully', 'success')
-                return redirect(url_for('main.profile'))
+                return redirect(url_for('main.profile'))  # Redirect to profile page
             else:
                 flash('Invalid credentials', 'danger')
                 return redirect(url_for('main.auth'))
