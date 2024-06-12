@@ -3,27 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Homepage</title>
+    <title>Home</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
     <style>
+        /* Custom styles */
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+            background: url('https://res.cloudinary.com/dqpjtdwi1/image/upload/v1717755159/dark-gray-wooden-plank-texture_ge30ua.jpg') no-repeat center center fixed;
+            background-size: cover;
+            margin: 0;
+            padding: 0;
+            color: #fff;
         }
 
         header {
-            background: #333;
+            background: rgba(51, 51, 51, 0.8);
             color: #fff;
-            padding: 1em 0;
-            text-align: center;
+            padding: 2em 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav {
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
         }
 
         nav ul {
             list-style: none;
             padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
         }
 
         nav ul li {
-            display: inline-block;
             margin-right: 20px;
         }
 
@@ -34,53 +50,102 @@
         nav ul li a {
             color: #fff;
             text-decoration: none;
+            cursor: pointer; /* Change cursor to pointer on hover */
+            display: flex; /* Make the link flex container */
+            align-items: center; /* Align items vertically */
+            transition: color 0.3s ease; /* Add transition for smooth color change */
         }
 
-        .header-icons {
-            list-style: none;
-            padding: 0;
-            margin-top: 10px;
-            text-align: center;
+        .nav-icon {
+            color: white;
+            text-decoration: none;
         }
 
-        .header-icons li {
-            display: inline-block;
+        .nav-icon:hover,
+        .nav-icon:hover img {
+            color: blue; /* Change color to blue on hover */
+        }
+
+        .profile-icon {
             margin-right: 20px;
         }
 
-        .header-icons li:last-child {
-            margin-right: 0;
-        }
-
-        .header-icons img {
-            width: 40px;
-            height: auto;
-            vertical-align: middle;
-            margin-right: 5px;
-        }
-
-        .main-content {
-            padding: 20px;
+        .container {
+            background-color: rgba(204, 186, 120, 0.8); /* Changed opacity to 0.8 */
+            padding: 50px;
+            border-radius: 20px; /* Decreased border-radius */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 80%; /* Changed width to 80% */
+            max-width: 800px; /* Added max-width for responsiveness */
             text-align: center;
+            margin: 50px auto; /* Added margin for centering */
+            position: relative;
         }
 
-        .welcome-message {
-            font-size: 24px;
+        .buttons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .login-btn,
+        .register-btn {
+            background-color: goldenrod;
+            color: #fff;
+            padding: 10px 20px;
+            border: blue;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+
+        .login-btn:hover,
+        .register-btn:hover {
+            color: red; /* Changed hover color to red */
+        }
+
+        h2 {
             margin-bottom: 20px;
         }
 
+        .flash {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+            width: calc(100% - 20px);
+        }
+
+        .flash.success {
+            background-color: #dff0d8;
+            color: #3c763d;
+        }
+
+        .flash.danger {
+            background-color: #f2dede;
+            color: #a94442;
+        }
+
+        /* Additional styles for .features and .feature */
         .features {
             display: flex;
+            flex-wrap: wrap; /* Added flex-wrap to handle smaller screens */
             justify-content: space-around;
             margin-top: 50px;
         }
 
         .feature {
-            width: 30%;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 30%; /* Adjusted width to fit three columns on larger screens */
+            padding: 20px; /* Decreased padding */
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 10px; /* Decreased border-radius */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            color: #fff;
+            margin-bottom: 20px; /* Added margin-bottom for separation */
+            transition: transform 0.3s ease; /* Added transition for smooth zoom effect */
+        }
+
+        .feature:hover {
+            transform: scale(1.05); /* Zoom in a little on hover */
         }
 
         .feature h3 {
@@ -88,7 +153,7 @@
         }
 
         .feature p {
-            font-size: 16px;
+            font-size: 16px; /* Decreased font-size for better readability */
         }
     </style>
 </head>
@@ -96,18 +161,30 @@
     <header>
         <nav>
             <ul class="header-icons">
-                <li><a href="{{ url_for('main.index') }}"><img src="{{ url_for('static', filename='img/home.png') }}" alt="Home"></a></li>
-                <li><a href="{{ url_for('main.auth') }}"><img src="{{ url_for('static', filename='img/register.png') }}" alt="Registration"></a></li>
-                <li><a href="{{ url_for('main.profile') }}"><img src="{{ url_for('static', filename='img/profile.png') }}" alt="Profile"></a></li>
-                <li><a href="{{ url_for('main.tasks') }}"><img src="{{ url_for('static', filename='img/tasks.png') }}" alt="Tasks"></a></li>
+                <li><a href="{{ url_for('index.index') }}"><img src="{{ url_for('static', filename='img/home.png') }}" alt="Home"></a></li>
+                <li><a href="{{ url_for('auth.auth') }}" class="nav-icon"><img src="{{ url_for('static', filename='img/register.png') }}" alt="Register"> Register</a></li>
+                <li><a href="{{ url_for('auth.auth') }}" class="nav-icon"><img src="{{ url_for('static', filename='img/tasks.png') }}" alt="Tasks"> Tasks</a></li>
             </ul>
         </nav>
-    </header>
-
-    <main class="main-content">
-        <div class="welcome-message">
-            Welcome to Your Todo List App
+        <div class="profile-icon">
+            <a href="{{ url_for('auth.auth') }}" class="nav-icon"><img src="{{ url_for('static', filename='img/profile.png') }}" alt="Profile"> Profile</a>
         </div>
+    </header>
+    
+    <div class="container">
+        <h2>Welcome to the Home Page</h2>
+        <div class="buttons">
+            <a href="{{ url_for('auth.auth') }}" class="login-btn">Login</a>
+            <a href="{{ url_for('auth.auth') }}" class="register-btn">Register</a>
+        </div>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash {{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        
         <div class="features">
             <div class="feature">
                 <h3>Organize Your Tasks</h3>
@@ -122,6 +199,6 @@
                 <p>Simple and user-friendly interface for hassle-free task management.</p>
             </div>
         </div>
-    </main>
+    </div>
 </body>
 </html>

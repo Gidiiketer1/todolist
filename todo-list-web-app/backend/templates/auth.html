@@ -1,30 +1,48 @@
+<!-- backend/templates/auth.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login/Register</title>
+    <title>Login and Register</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <style>
-        /* CSS Styles */
+        /* Your CSS styles */
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+            background-image: url('https://res.cloudinary.com/dqpjtdwi1/image/upload/v1717755159/dark-gray-wooden-plank-texture_ge30ua.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-position: center;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background: rgba(51, 51, 51, 0.8);
+            color: #fff;
+            padding: 2em 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        header {
-            background: #333;
-            color: #fff;
-            padding: 1em 0;
-            text-align: center;
+        nav {
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
         }
 
         nav ul {
             list-style: none;
             padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
         }
 
         nav ul li {
-            display: inline-block;
             margin-right: 20px;
         }
 
@@ -35,45 +53,35 @@
         nav ul li a {
             color: #fff;
             text-decoration: none;
+            cursor: pointer; /* Change cursor to pointer on hover */
+            display: flex; /* Make the link flex container */
+            align-items: center; /* Align items vertically */
+            transition: color 0.3s ease; /* Add transition for smooth color change */
         }
 
-        .header-icons {
-            list-style: none;
-            padding: 0;
-            margin-top: 10px;
-            text-align: center;
+        .nav-icon {
+            color: white;
+            text-decoration: none;
         }
 
-        .header-icons li {
-            display: inline-block;
+        .nav-icon:hover,
+        .nav-icon:hover img {
+            color: blue; /* Change color to blue on hover */
+        }
+
+        .profile-icon {
             margin-right: 20px;
-        }
-
-        .header-icons li:last-child {
-            margin-right: 0;
-        }
-
-        .header-icons img {
-            width: 40px;
-            height: auto;
-            vertical-align: middle;
-            margin-right: 5px;
-        }
-
-        .main-content {
-            padding: 20px;
-            text-align: center;
         }
 
         .container {
             max-width: 340px;
-            margin: auto;
+            margin: 50px auto; /* Centering the container */
             padding: 20px;
             border: 1px solid #ccc;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            background-color: #e6f7ff; /* Light blue background */
-            margin-top: 50px;
+            background-color: rgba(230, 247, 255, 0.9); /* Light blue background with more transparency */
+            position: relative;
         }
 
         h2 {
@@ -82,13 +90,8 @@
         }
 
         form {
-            display: flex;
-            flex-direction: column;
-        }
-
-        label {
-            margin-top: 10px;
-            font-size: 16px;
+            width: 100%;
+            position: relative;
         }
 
         input[type="text"],
@@ -99,10 +102,28 @@
             border: 1px solid #ccc;
             border-radius: 5px;
             font-size: 17px;
+            width: calc(100% - 32px); /* Adjusting width for icon/button */
         }
 
-        .submit-btn {
-            margin-top: 25px;
+        .show-password {
+            position: absolute;
+            top: 50%;
+            right: 5px;
+            transform: translateY(-50%);
+            background-color: #fff; /* Background color */
+            border: 1px solid #ccc; /* Border */
+            border-radius: 5px; /* Border radius */
+            padding: 5px 10px; /* Padding */
+            cursor: pointer;
+            color: #555; /* Icon color */
+        }
+
+        .show-password:hover {
+            color: #333; /* Icon color on hover */
+        }
+
+        .submit-btn,
+        .toggle-btn button {
             padding: 15px 25px;
             background-color: orange;
             color: white;
@@ -111,122 +132,127 @@
             cursor: pointer;
             font-size: 16px;
             transition: background-color 0.3s ease;
-        }
-
-        .submit-btn:hover {
-            background-color: darkorange;
-        }
-
-        .tab {
-            display: none;
-        }
-
-        .tab.active {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .tab.active button {
+            width: 100%;
             margin-top: 15px;
         }
 
-        .error {
+        .submit-btn:hover,
+        .toggle-btn button:hover {
+            background-color: darkorange;
+        }
+
+        .flash {
             color: red;
             text-align: center;
             margin-bottom: 20px;
         }
 
-        .button-container {
+        .toggle-btn {
+            margin-top: 10px;
+            text-align: right;
+            width: 100%;
+        }
+
+        .toggle-btn button {
+            background: none;
+            border: none;
+            color: blue;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+
+        .toggle-btn button:hover {
+            color: darkblue;
+        }
+
+        .btn-container {
             display: flex;
             justify-content: space-between;
-            margin-top: 25px;
+            width: 100%;
+            margin-top: 20px;
         }
     </style>
 </head>
 <body>
-    <header>
-        <nav>
-            <ul class="header-icons">
-                <li><a href="{{ url_for('main.index') }}"><img src="{{ url_for('static', filename='img/home.png') }}" alt="Home"></a></li>
-                <li><a href="{{ url_for('main.auth') }}"><img src="{{ url_for('static', filename='img/register.png') }}" alt="Registration"></a></li>
-                <li><a href="{{ url_for('main.profile') }}"><img src="{{ url_for('static', filename='img/profile.png') }}" alt="Profile"></a></li>
-                <li><a href="{{ url_for('main.tasks') }}"><img src="{{ url_for('static', filename='img/tasks.png') }}" alt="Tasks"></a></li>
-            </ul>
-        </nav>
-    </header>
-    <div class="container">
-        <div id="error-message" class="error"></div>
-        <h2>Login/Register</h2>
-        <form id="auth-form" action="{{ url_for('main.auth') }}" method="POST">
-            <!-- Login Form -->
-            <div id="login-tab" class="tab active">
-                <label for="login-email">Email:</label>
-                <input type="email" id="login-email" name="email" required>
-                
-                <label for="login-password">Password:</label>
-                <input type="password" id="login-password" name="password" required>
-                
-                <div class="button-container">
-                    <button class="submit-btn" type="submit" name="action" value="login">
-                        Login
-                    </button>
-                    <button class="submit-btn" type="button" onclick="showTab('register-tab')">
-                        Register
-                    </button>
-                </div>
-            </div>
-
-            <!-- Register Form -->
-            <div id="register-tab" class="tab">
-                <label for="register-username">Username:</label>
-                <input type="text" id="register-username" name="username" required>
-                
-                <label for="register-email">Email:</label>
-                <input type="email" id="register-email" name="email" required>
-                
-                <label for="register-password">Password:</label>
-                <input type="password" id="register-password" name="password" required>
-                
-                <div class="button-container">
-                    <button class="submit-btn" type="submit" name="action" value="register">
-                        Register
-                    </button>
-                    <button class="submit-btn" type="button" onclick="showTab('login-tab')">
-                        Back to Login
-                    </button>
-                </div>
-            </div>
-        </form>
+<header>
+    <nav>
+        <ul class="header-icons">
+            <li><a href="{{ url_for('index.index') }}"><img src="{{ url_for('static', filename='img/home.png') }}" alt="Home"></a></li>
+            <li><a href="{{ url_for('auth.auth') }}" class="nav-icon"><img src="{{ url_for('static', filename='img/register.png') }}" alt="Register"> Register</a></li>
+            <li><a href="{{ url_for('auth.auth') }}" class="nav-icon"><img src="{{ url_for('static', filename='img/tasks.png') }}" alt="Tasks"> Tasks</a></li>
+        </ul>
+    </nav>
+    <div class="profile-icon">
+        <a href="{{ url_for('auth.auth') }}" class="nav-icon"><img src="{{ url_for('static', filename='img/profile.png') }}" alt="Profile"> Profile</a>
     </div>
+</header>
+<div class="container">
+    <h2>Login or Register</h2>
+    <form id="auth-form" action="{{ url_for('auth.auth') }}" method="post">
+        <input type="hidden" name="action" id="action" value="register">
+        <input type="text" name="username" id="username" placeholder="Username" required><br>
+        <input type="email" name="email" id="email" placeholder="Email" required><br>
+        <div style="position: relative;">
+            <input type="password" name="password" id="password" placeholder="Password" required>
+            <button type="button" class="show-password" onclick="togglePassword()">Show</button>
+        </div>
+        <div class="btn-container">
+            <button type="submit" class="submit-btn">Register</button>
+        </div>
+    </form>
+    <div class="toggle-btn">
+        <button onclick="toggleForm()">Switch to Login</button>
+    </div>
+    <div class="flash">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        {% for category, message in messages %}
+        {{ message }}
+        {{ message }}
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+    </div>
+</div>
 
-    <script>
-        // JavaScript code
-        function showTab(tabId) {
-            document.querySelectorAll('.tab').forEach(tab => {
-                tab.classList.remove('active');
-            });
-            document.getElementById(tabId).classList.add('active');
+<script>
+    function toggleForm() {
+        var action = document.getElementById('action');
+        var email = document.getElementById('email');
+        var password = document.getElementById('password');
+        var username = document.getElementById('username');
+        var registerBtn = document.querySelector('.submit-btn');
+        var toggleBtn = document.querySelector('.toggle-btn button');
+
+        if (action.value === 'login') {
+            action.value = 'register';
+            email.placeholder = 'Email';
+            password.placeholder = 'Password';
+            username.style.display = 'block';
+            registerBtn.textContent = 'Register';
+            toggleBtn.textContent = 'Switch to Login';
+        } else {
+            action.value = 'login';
+            email.placeholder = 'Email';
+            password.placeholder = 'Password';
+            username.style.display = 'none';
+            registerBtn.textContent = 'Login';
+            toggleBtn.textContent = 'Switch to Register';
         }
+    }
 
-        function displayError(message) {
-            const errorMessage = document.getElementById('error-message');
-            errorMessage.textContent = message;
+    function togglePassword() {
+        var passwordInput = document.getElementById("password");
+        var passwordButton = document.querySelector('.show-password');
+        if (passwordInput.type === "password") {
+            passwordInput.type = "text";
+            passwordButton.textContent = 'Hide';
+        } else {
+            passwordInput.type = "password";
+            passwordButton.textContent = 'Show';
         }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            const urlParams = new URLSearchParams(window.location.search);
-            const error = urlParams.get('error');
-            const action = urlParams.get('action');
-
-            if (error) {
-                displayError(error);
-                if (action === 'login') {
-                    showTab('login-tab');
-                } else if (action === 'register') {
-                    showTab('register-tab');
-                }
-            }
-        });
-    </script>
+    }
+</script>
 </body>
 </html>
+

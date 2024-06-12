@@ -1,30 +1,57 @@
+<!-- backend/templates/profile.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Profile</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Profile</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        p {
+            text-align: center;
+            color: #666;
+        }
+
+        a {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #337ab7;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <nav>
-            <ul class="header-icons">
-                <li><a href="{{ url_for('main.index') }}"><img src="{{ url_for('static', filename='img/home.png') }}" alt="Home"></a></li>
-                <li><a href="{{ url_for('main.auth') }}"><img src="{{ url_for('static', filename='img/register.png') }}" alt="Registration"></a></li>
-                <li><a href="{{ url_for('main.profile') }}"><img src="{{ url_for('static', filename='img/profile.png') }}" alt="Profile"></a></li>
-                <li><a href="{{ url_for('main.tasks') }}"><img src="{{ url_for('static', filename='img/tasks.png') }}" alt="Tasks"></a></li>
-            </ul>
-        </nav>
-    </header>
     <div class="container">
-        <h2>User Profile</h2>
-        <!-- Display user details here -->
-        <div id="user-details">
-            <p><strong>Username:</strong> {{ username }}</p>
-            <p><strong>Email:</strong> {{ email }}</p>
-            <!-- Add more details as needed -->
-        </div>
+        <h1>Welcome, {{ user.username }}!</h1>
+        <h2>{{ user.username }}'s Profile</h2>
+        <p>Email: {{ user.email }}</p>
+        <a href="{{ url_for('auth.logout') }}">Logout</a>
     </div>
 </body>
 </html>

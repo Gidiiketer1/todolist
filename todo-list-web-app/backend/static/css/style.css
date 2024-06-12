@@ -1,10 +1,14 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
+    background: url('https://res.cloudinary.com/dqpjtdwi1/image/upload/v1717755159/dark-gray-wooden-plank-texture_ge30ua.jpg') no-repeat center center fixed;
+    background-size: cover;
+    margin: 0;
+    padding: 0;
+    color: #fff; /* Changed text color to white for better contrast */
 }
 
 header {
-    background: #333;
+    background: rgba(51, 51, 51, 0.8); /* Semi-transparent background */
     color: #fff;
     padding: 1em 0;
     text-align: center;
@@ -55,4 +59,86 @@ nav ul li a {
 .main-content {
     padding: 20px;
     text-align: center;
+}
+
+.welcome-message {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.features {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 50px;
+}
+
+.feature {
+    width: 30%;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.1); /* Semi-transparent background */
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    color: #fff; /* Ensure text within features is white for visibility */
+}
+
+.feature h3 {
+    margin-bottom: 10px;
+}
+
+.feature p {
+    font-size: 16px;
+}
+
+/* New Styles */
+.container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    text-align: center;
+}
+
+h2 {
+    margin-bottom: 20px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #5cb85c;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #4cae4c;
+}
+
+.flash {
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 5px;
+    width: calc(100% - 20px);
+}
+
+.flash.success {
+    background-color: #dff0d8;
+    color: #3c763d;
+}
+
+.flash.danger {
+    background-color: #f2dede;
+    color: #a94442;
 }

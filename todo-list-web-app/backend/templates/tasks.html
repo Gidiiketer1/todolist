@@ -1,38 +1,135 @@
+<!-- backend/templates/tasks.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Tasks - Todo List</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tasks</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background: rgba(51, 51, 51, 0.8);
+            color: #fff;
+            padding: 2em 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav {
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        nav ul li {
+            margin-right: 20px;
+        }
+
+        nav ul li:last-child {
+            margin-right: 0;
+        }
+
+
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        a {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #337ab7;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
+<header>
+    <nav>
+        <ul class="header-icons">
+            <li><a href="{{ url_for('index.index') }}"><img src="{{ url_for('static', filename='img/home.png') }}" alt="Home"></a></li>
+            <li><a href="{{ url_for('auth.auth') }}" class="nav-icon"><img src="{{ url_for('static', filename='img/register.png') }}" alt="Register"> Register</a></li>
+            <li><a href="{{ url_for('auth.auth') }}" class="nav-icon"><img src="{{ url_for('static', filename='img/tasks.png') }}" alt="Tasks"> Tasks</a></li>
+        </ul>
+    </nav>
+    <div class="profile-icon">
+        <a href="{{ url_for('auth.auth') }}" class="nav-icon"><img src="{{ url_for('static', filename='img/profile.png') }}" alt="Profile"> Profile</a>
+    </div>
+</header>
 <body>
-    <header>
-        <nav>
-            <ul class="header-icons">
-                <li><a href="{{ url_for('main.index') }}"><img src="{{ url_for('static', filename='img/home.png') }}" alt="Home"></a></li>
-                <li><a href="{{ url_for('main.auth') }}"><img src="{{ url_for('static', filename='img/register.png') }}" alt="Registration"></a></li>
-                <li><a href="{{ url_for('main.profile') }}"><img src="{{ url_for('static', filename='img/profile.png') }}" alt="Profile"></a></li>
-                <li><a href="{{ url_for('main.tasks') }}"><img src="{{ url_for('static', filename='img/tasks.png') }}" alt="Tasks"></a></li>
-            </ul>
-        </nav>
-    </header>
-    <footer class="footer mt-auto py-3 bg-light">
-        <div class="container">
-            <span class="text-muted">© 2024 ToDo List App</span>
-        </div>
-    </footer>
-    
     <div class="container">
-        <h1>Tasks</h1>
-        <div class="home-section">
-            <h2>Welcome to Your Todo List</h2>
-            <p>Stay organized and get things done!</p>
-            <ul class="task-list">
-                <li class="task-item">Task 1</li>
-                <li class="task-item">Task 2</li>
-                <li class="task-item">Task 3</li>
-                <!-- Add more tasks as needed -->
-            </ul>
-        </div>
+        <h1>Welcome, {{ current_user.username }}!</h1>
+        <h2>{{ current_user.username }}'s Tasks</h2>
+        <ul>
+            {% for task in tasks %}
+                <li>{{ task.title }}</li>
+            {% endfor %}
+        </ul>
+        <form id="taskForm" method="POST" action="/submit-task">
+            <input type="text" name="title" placeholder="Title" required>
+            <textarea name="description" placeholder="Description"></textarea>
+            <!-- Include the CSRF token -->
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <button type="submit">Add Task</button>
+        </form>
+        <a href="{{ url_for('auth.logout') }}">Logout</a>
+    </div>
+
+    <script>
+        // Submit task form via AJAX
+        document.getElementById('taskForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            var formData = new FormData(this);
+            fetch('/tasks', {
+                method: 'POST',
+                body: formData, // Send form data directly
+                headers: {
+                    'X-CSRFToken': formData.get('csrf_token') // Retrieve CSRF token from form data
+                }
+            })
+            .then(response => {
+                if (response.ok) {
+                    window.location.reload();  // Reload the page after adding a new task
+                }
+            });
+        });
+    </script>
 </body>
 </html>
