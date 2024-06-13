@@ -9,6 +9,7 @@ auth_bp = Blueprint('auth', __name__)
 def auth():
     if request.method == 'POST':
         action = request.form.get('action')
+        
         if action == 'login':
             return handle_login()
         elif action == 'register':
@@ -18,6 +19,9 @@ def auth():
 def handle_login():
     email = request.form['email']
     password = request.form['password']
+    print("Email not logged in")
+    print(email)
+    print(password)
     user = User.query.filter_by(email=email).first()
 
     if user and user.check_password(password):

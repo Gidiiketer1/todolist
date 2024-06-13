@@ -1,7 +1,9 @@
 # todo-list-web-app/backend/app.py
 
 from backend import create_app, db
+import logging
 
+logging.basicConfig(level=logging.DEBUG)
 app = create_app()
 
 if __name__ == '__main__':
