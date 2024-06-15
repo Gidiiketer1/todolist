@@ -189,8 +189,10 @@
 <div class="container">
     <h2>Login or Register</h2>
     <form id="auth-form" action="{{ url_for('auth.auth') }}" method="post">
+        {{ csrf_token()}}
+        <input type="hidden" name="csrf_token" value="{{ csrf_token()}}">
         <input type="hidden" name="action" id="action" value="register">
-        <input type="text" name="username" id="username" placeholder="Username" required><br>
+        <input type="text" name="username" id="username" placeholder="Username" ><br>
         <input type="email" name="email" id="email" placeholder="Email" required><br>
         <div style="position: relative;">
             <input type="password" name="password" id="password" placeholder="Password" required>

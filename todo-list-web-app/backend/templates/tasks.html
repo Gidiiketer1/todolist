@@ -1,134 +1,284 @@
-<!-- backend/templates/tasks.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tasks</title>
+    <title>Dark Theme To-Do List</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
-            margin: 0;
-            padding: 0;
-        }
-        header {
-            background: rgba(51, 51, 51, 0.8);
-            color: #fff;
-            padding: 2em 0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+        /* Resetting default browser styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-        nav {
-            flex-grow: 1;
-            display: flex;
-            justify-content: center;
-        }
+/* Body styles */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #121212;
+    color: #e0e0e0;
+    margin: 0;
+    padding-top: 80px; /* Adjust as needed */
+}
 
-        nav ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            display: flex;
-            justify-content: center;
-        }
+/* Header styles */
+header {
+    background: rgba(51, 51, 51, 0.8);
+    color: #fff;
+    padding: 1em 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0; /* Position on top left */
+    width: 100%;
+    z-index: 1000;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
 
-        nav ul li {
-            margin-right: 20px;
-        }
+header h1 {
+    font-size: 24px;
+    color: #bb86fc;
+    margin-left: 20px;
+}
 
-        nav ul li:last-child {
-            margin-right: 0;
-        }
+header h2 {
+    font-size: 18px;
+    color: #fff;
+    margin-right: 20px;
+}
+
+/* Navigation styles */
+nav {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+}
+
+nav ul li {
+    margin-right: 20px;
+}
+
+nav ul li:last-child {
+    margin-right: 0;
+}
+
+nav a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+/* Profile icon styles */
+.profile-icon img,
+.header-icons img {
+    filter: invert(1);
+    height: 24px;
+    width: 24px;
+    margin-right: 10px;
+}
+
+/* Task list styles */
+#task-list {
+    list-style: none;
+}
+
+#task-list li {
+    padding: 10px;
+    margin: 5px 0;
+    background-color: #2c2c2c;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#task-list li span {
+    flex: 1;
+}
+
+#task-list li button {
+    border: none;
+    background-color: transparent;
+    color: #e53935;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+#task-list li button:hover {
+    color: #d32f2f;
+}
+
+/* Logout link styles */
+.logout-link {
+    display: block;
+    text-align: center;
+    margin-top: 20px;
+    color: #00ced1;
+    text-decoration: none;
+}
+
+.logout-link:hover {
+    text-decoration: underline;
+}
+
+/* Form container styles */
+.form-container input,
+.form-container textarea,
+.form-container button {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #2c2c2c;
+    color: #e0e0e0;
+}
+
+.form-container button {
+    background-color: #1e3a5f;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.form-container button:hover {
+    background-color: #3700b3;
+}
+
+/* Welcome message styles */
+#welcome-message {
+    display: none;
+    position: fixed;
+    top: 20px; /* Adjust top position as needed */
+    left: 20px; /* Adjust left position as needed */
+    background-color: #ffffff;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    z-index: 999;
+}
+
+/* Additional custom styles can be added here as needed */
 
 
-        .container {
-            max-width: 800px;
-            margin: 50px auto;
-            padding: 20px;
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
-        h1 {
-            text-align: center;
-            color: #333;
-        }
-
-        ul {
-            list-style-type: none;
-            padding: 0;
-        }
-
-        li {
-            margin-bottom: 10px;
-        }
-
-        a {
-            display: block;
-            text-align: center;
-            margin-top: 20px;
-            color: #337ab7;
-            text-decoration: none;
-        }
-
-        a:hover {
-            text-decoration: underline;
-        }
     </style>
 </head>
-<header>
-    <nav>
-        <ul class="header-icons">
-            <li><a href="{{ url_for('index.index') }}"><img src="{{ url_for('static', filename='img/home.png') }}" alt="Home"></a></li>
-            <li><a href="{{ url_for('auth.auth') }}" class="nav-icon"><img src="{{ url_for('static', filename='img/register.png') }}" alt="Register"> Register</a></li>
-            <li><a href="{{ url_for('auth.auth') }}" class="nav-icon"><img src="{{ url_for('static', filename='img/tasks.png') }}" alt="Tasks"> Tasks</a></li>
-        </ul>
-    </nav>
-    <div class="profile-icon">
-        <a href="{{ url_for('auth.auth') }}" class="nav-icon"><img src="{{ url_for('static', filename='img/profile.png') }}" alt="Profile"> Profile</a>
-    </div>
-</header>
 <body>
-    <div class="container">
-        <h1>Welcome, {{ current_user.username }}!</h1>
-        <h2>{{ current_user.username }}'s Tasks</h2>
-        <ul>
+    <header>
+        <nav>
+            <ul class="header-icons">
+                <li><a href="{{ url_for('index.index') }}"><img src="{{ url_for('static', filename='img/home.png') }}" alt="Home"></a></li>
+                <li><a href="{{ url_for('auth.auth') }}" class="nav-icon"><img src="{{ url_for('static', filename='img/register.png') }}" alt="Register"> Register</a></li>
+                <li><a href="{{ url_for('auth.auth') }}" class="nav-icon"><img src="{{ url_for('static', filename='img/tasks.png') }}" alt="Tasks"> Tasks</a></li>
+            </ul>
+        </nav>
+        <div class="profile-icon">
+            <a href="{{ url_for('auth.auth') }}" class="nav-icon"><img src="{{ url_for('static', filename='img/profile.png') }}" alt="Profile"> Profile</a>
+        </div>
+        {% if current_user.username %}
+        <div>
+            <h1>Welcome, {{ current_user.username }}!</h1>
+            <h2>{{ current_user.username }}'s Tasks</h2>
+        </div>
+        {% endif %}
+    </header>
+    
+    <main>
+        <div class="input-container">
+            <input type="text" id="new-task" placeholder="Add a new task...">
+            <button id="add-task">Add</button>
+        </div>
+        <ul id="task-list">
             {% for task in tasks %}
-                <li>{{ task.title }}</li>
+                <li>
+                    <span>{{ task.title }}</span>
+                    <button onclick="deleteTask('{{ task.id }}')">&times;</button>
+                </li>
             {% endfor %}
         </ul>
-        <form id="taskForm" method="POST" action="/submit-task">
+        <form id="taskForm" class="form-container" method="POST" action="/submit-task">
             <input type="text" name="title" placeholder="Title" required>
             <textarea name="description" placeholder="Description"></textarea>
             <!-- Include the CSRF token -->
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
             <button type="submit">Add Task</button>
         </form>
-        <a href="{{ url_for('auth.logout') }}">Logout</a>
-    </div>
-
+        <a href="{{ url_for('auth.logout') }}" class="logout-link">Logout</a>
+    </main>
+    
+    <!-- JavaScript code -->
     <script>
-        // Submit task form via AJAX
-        document.getElementById('taskForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-            var formData = new FormData(this);
-            fetch('/tasks', {
-                method: 'POST',
-                body: formData, // Send form data directly
-                headers: {
-                    'X-CSRFToken': formData.get('csrf_token') // Retrieve CSRF token from form data
-                }
-            })
-            .then(response => {
-                if (response.ok) {
-                    window.location.reload();  // Reload the page after adding a new task
+        document.addEventListener('DOMContentLoaded', function() {
+            var welcomeMessage = document.getElementById('welcome-message');
+
+            // Show welcome message for 5 seconds
+            if (welcomeMessage) {
+                welcomeMessage.style.display = 'block';
+                setTimeout(function() {
+                    welcomeMessage.style.display = 'none';
+                }, 5000);
+            }
+
+            document.getElementById('taskForm').addEventListener('submit', function(event) {
+                event.preventDefault();
+                var formData = new FormData(this);
+                fetch('/tasks', {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-CSRFToken': formData.get('csrf_token')
+                    }
+                })
+                .then(response => {
+                    if (response.ok) {
+                        window.location.reload();
+                    }
+                })
+                .catch(error => console.error('Error submitting task:', error));
+            });
+
+            document.getElementById('add-task').addEventListener('click', function() {
+                const taskInput = document.getElementById('new-task');
+                const taskText = taskInput.value.trim();
+
+                if (taskText) {
+                    addTask(taskText);
+                    taskInput.value = '';
+                    taskInput.focus();
                 }
             });
+
+            function addTask(taskText) {
+                const taskList = document.getElementById('task-list');
+
+                const taskItem = document.createElement('li');
+                const taskSpan = document.createElement('span');
+                taskSpan.textContent = taskText;
+
+                const deleteButton = document.createElement('button');
+                deleteButton.innerHTML = '&times;';
+                deleteButton.addEventListener('click', function() {
+                    taskList.removeChild(taskItem);
+                });
+
+                taskItem.appendChild(taskSpan);
+                taskItem.appendChild(deleteButton);
+                taskList.appendChild(taskItem);
+            }
         });
     </script>
 </body>

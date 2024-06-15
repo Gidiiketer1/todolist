@@ -47,11 +47,18 @@
     </style>
 </head>
 <body>
+{% if user.is_authenticated %}
     <div class="container">
         <h1>Welcome, {{ user.username }}!</h1>
         <h2>{{ user.username }}'s Profile</h2>
         <p>Email: {{ user.email }}</p>
         <a href="{{ url_for('auth.logout') }}">Logout</a>
     </div>
+{% else %}
+    <div class="container">
+        <h1>Oops! You're not logged in.</h1>
+        <p>Please <a href="{{ url_for('auth.auth') }}">sign in</a> or <a href="{{ url_for('auth.auth') }}">register</a> to view your profile.</p>
+    </div>
+{% endif %}
 </body>
 </html>
