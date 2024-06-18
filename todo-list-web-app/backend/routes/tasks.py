@@ -8,17 +8,42 @@ tasks_bp = Blueprint('tasks', __name__)
 @login_required
 def tasks():
     if request.method == 'POST':
-        return handle_task_creation()
+        return create_task()
 
     tasks = Task.query.filter_by(user_id=current_user.id).all()
     return render_template('tasks.html', tasks=tasks)
 
-def handle_task_creation():
-    data = request.get_json()
-    new_task = Task(title=data['title'], description=data['description'], user_id=current_user.id)
+@tasks_bp.route('/tasks/<int:task_id>', methods=['PUT', 'DELETE'])
+@login_required
+def update_or_delete_task(task_id):
+    task = Task.query.get_or_404(task_id)
 
+    if request.method == 'PUT':
+        return update_task(task)
+    elif request.method == 'DELETE':
+        return delete_task(task)
+
+def create_task():
+    data = request.get_json()
+    title = data.get('title')
+    description = data.get('description')
+
+    new_task = Task(title=title, description=description, user_id=current_user.id)
     db.session.add(new_task)
     db.session.commit()
 
-    # Redirect to the tasks page after adding a new task
-    return redirect(url_for('tasks.tasks'))
+    return jsonify({'id': new_task.id, 'title': new_task.title, 'description': new_task.description})
+
+def update_task(task):
+    data = request.get_json()
+    task.title = data.get('title', task.title)
+    task.description = data.get('description', task.description)
+
+    db.session.commit()
+    return jsonify({'id': task.id, 'title': task.title, 'description': task.description})
+
+def delete_task(task):
+    db.session.delete(task)
+    db.session.commit()
+    return jsonify({'message': 'Task deleted successfully'})
+
