@@ -14,14 +14,13 @@ def auth():
             return handle_login()
         elif action == 'register':
             return handle_registration()
+    
     return render_template('auth.html')
 
 def handle_login():
     email = request.form['email']
     password = request.form['password']
-    print("Email not logged in")
-    print(email)
-    print(password)
+    
     user = User.query.filter_by(email=email).first()
 
     if user and user.check_password(password):
@@ -29,7 +28,7 @@ def handle_login():
         # Redirect to the tasks page after login
         return redirect(url_for('tasks.tasks'))
     else:
-        flash('Invalid email or password')
+        flash('Invalid email or password', 'error')
         return redirect(url_for('auth.auth'))
 
 def handle_registration():
@@ -38,7 +37,7 @@ def handle_registration():
     password = request.form['password']
 
     if User.query.filter_by(username=username).first() or User.query.filter_by(email=email).first():
-        flash('Username or email already exists')
+        flash('Username or email already exists', 'error')
         return redirect(url_for('auth.auth'))
 
     new_user = User(username=username, email=email)
@@ -55,4 +54,5 @@ def handle_registration():
 @login_required
 def logout():
     logout_user()
+    flash('Logged out successfully', 'success')
     return redirect(url_for('auth.auth'))

@@ -4,411 +4,464 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dark Theme To-Do List</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-bnCmoGh9ZDfTt0LlfUpPHRzL4Jyv6/2lTFSD7yrvRiPlk5jNmj3RJQlC7sRJ/Nc4UP9eJJsO4syYChd9HT2AXQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
-  /* Reset default styles */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+        /* Reset default styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-/* Global styles */
-body {
-    font-family: 'Arial', sans-serif;
-    background-color: #121212;
-    color: #e0e0e0;
-    padding-top: 80px;
-    line-height: 1.6;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-}
+        /* Global styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #121212;
+            color: #e0e0e0;
+            padding-top: 80px;
+            line-height: 1.6;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
 
-/* Header styles */
-header {
-    background: rgba(51, 51, 51, 0.8);
-    color: #fff;
-    padding: 1em 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 1000;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-}
+        /* Header styles */
+        header {
+            background: rgba(51, 51, 51, 0.8);
+            color: #fff;
+            padding: 1em 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
 
-header h1 {
-    font-size: 24px;
-    color: #bb86fc;
-    margin-left: 20px;
-}
+        header h1 {
+            font-size: 24px;
+            color: #bb86fc;
+            margin-left: 20px;
+        }
 
-header h2 {
-    font-size: 18px;
-    color: #fff;
-    margin-right: 20px;
-}
+        header h2 {
+            font-size: 18px;
+            color: #fff;
+            margin-right: 20px;
+        }
 
-/* Navigation styles */
-nav ul {
-    list-style: none;
-    display: flex;
-    align-items: center;
-}
+        /* Navigation styles */
+        nav ul {
+            list-style: none;
+            display: flex;
+            align-items: center;
+        }
 
-nav ul li {
-    margin-right: 20px;
-}
+        nav ul li {
+            margin-right: 20px;
+        }
 
-nav ul li:last-child {
-    margin-right: 0;
-}
+        nav ul li:last-child {
+            margin-right: 0;
+        }
 
-nav a {
-    color: #fff;
-    text-decoration: none;
-    font-size: 18px;
-    transition: color 0.3s ease;
-}
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 18px;
+            transition: color 0.3s ease;
+        }
 
-nav a:hover {
-    text-decoration: underline;
-}
+        nav a:hover {
+            text-decoration: underline;
+        }
 
-.profile-icon img,
-.header-icons img {
-    filter: invert(1);
-    height: 24px;
-    width: 24px;
-    margin-right: 10px;
-}
+        .profile-icon img,
+        .header-icons img {
+            filter: invert(1);
+            height: 24px;
+            width: 24px;
+            margin-right: 10px;
+        }
 
-/* Main content styles */
-main {
-    flex: 1;
-    display: flex;
-    justify-content: flex-end;
-    padding: 20px;
-    padding-top: 120px;
-    max-width: 100%;
-    margin: auto;
-}
+        /* Main content styles */
+        main {
+            flex: 1;
+            display: flex;
+            justify-content: flex-end;
+            padding: 20px;
+            padding-top: 120px;
+            max-width: 100%;
+            margin: auto;
+        }
 
-.content-container {
-    width: 50%;
-    padding-left: 20px;
-}
+        .content-container {
+            width: 50%;
+            padding-left: 20px;
+        }
 
-.input-container {
-    display: flex;
-    margin-bottom: 20px;
-}
+        .input-container {
+            display: flex;
+            margin-bottom: 20px;
+        }
 
-.input-container input[type="text"] {
-    flex: 1;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    background-color: #2c2c2c;
-    color: #e0e0e0;
-    font-size: 16px;
-    margin-right: 10px;
-}
+        .input-container input[type="text"] {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #2c2c2c;
+            color: #e0e0e0;
+            font-size: 16px;
+            margin-right: 10px;
+        }
 
-.input-container button {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    background-color: #1e88e5;
-    color: #fff;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
+        .input-container button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #1e88e5;
+            color: #fff;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
 
-.input-container button:hover {
-    background-color: #0d47a1;
-}
+        .input-container button:hover {
+            background-color: #0d47a1;
+        }
 
-#task-list {
-    list-style: none;
-    padding: 0;
-    margin-top: 20px;
-}
+        #task-list {
+            list-style: none;
+            padding: 0;
+            margin-top: 20px;
+        }
 
-#task-list li {
-    padding: 10px;
-    margin: 5px 0;
-    background-color: #2c2c2c;
-    border-radius: 5px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
+        #task-list li {
+            padding: 10px;
+            margin: 5px 0;
+            background-color: #2c2c2c;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-#task-list li span {
-    flex: 1;
-    margin-right: 10px;
-    color: #e0e0e0;
-    overflow-wrap: break-word;
-}
+        #task-list li span {
+            flex: 1;
+            margin-right: 10px;
+            color: #e0e0e0;
+            overflow-wrap: break-word;
+        }
 
-#task-list li button {
-    border: none;
-    background-color: transparent;
-    cursor: pointer;
-    transition: color 0.3s ease;
-}
+        #task-list li button {
+            border: none;
+            background-color: transparent;
+            cursor: pointer;
+            transition: color 0.3s ease;
+            margin-left: 5px;
+        }
 
-#task-list li .delete-btn {
-    color: #e53935;
-}
+        #task-list li .delete-btn {
+            color: #e53935;
+        }
 
-#task-list li .delete-btn:hover {
-    color: #d32f2f;
-    transform: scale(1.1);
-}
+        #task-list li .delete-btn:hover {
+            color: #d32f2f;
+            transform: scale(1.1);
+        }
 
-#task-list li .edit-btn {
+        #task-list li .edit-btn {
     margin-left: 10px;
-    color: #1e88e5;
-}
+            color: #1e88e5;
+        }
 
-#task-list li .edit-btn:hover {
-    color: #0d47a1;
-    transform: scale(1.1);
-}
+        #task-list li .edit-btn:hover {
+            color: #0d47a1;
+            transform: scale(1.1);
+        }
 
-.logout-link {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    color: #00ced1;
-    text-decoration: none;
-    font-size: 18px;
-    transition: color 0.3s ease;
-}
+        #task-list li .mark-done-btn {
+            color: #43a047;
+        }
 
-.logout-link:hover {
-    text-decoration: underline;
-}
+        #task-list li .mark-done-btn:hover {
+            color: #388e3c;
+        }
 
-/* Form styles */
-.form-container {
-    margin-top: 20px;
-    background-color: #2c2c2c;
-    padding: 30px;
-    border-radius: 5px;
-}
+        #task-list li .set-reminder-btn {
+            color: #ffb300;
+        }
 
-.form-container input,
-.form-container textarea {
-    width: 100%;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    background-color: #3c3c3c;
-    color: #e0e0e0;
-    margin-bottom: 10px;
-    font-size: 16px;
-}
+        #task-list li .set-reminder-btn:hover {
+            color: #f57c00;
+        }
 
-.form-container textarea {
-    resize: vertical;
-    min-height: 80px;
-}
+        .task-action-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+            color: #666;
+            transition: color 0.3s ease;
+            margin-left: 5px;
+        }
+        
+        .task-action-btn:hover {
+            color: #333;
+        }
+        
 
-.form-container button {
-    width: 100%;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    background-color: #1e88e5;
-    color: #fff;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
+        .logout-link {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            color: #00ced1;
+            text-decoration: none;
+            font-size: 18px;
+            transition: color 0.3s ease;
+        }
 
-.form-container button:hover {
-    background-color: #0d47a1;
-}
+        .logout-link:hover {
+            text-decoration: underline;
+        }
 
-/* Subheader at the bottom */
-.subheader {
-    background: rgba(51, 51, 51, 0.8);
-    color: #fff;
-    padding: 1em 0;
-    text-align: center;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    z-index: 1000;
-    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.5);
-}
+        /* Form styles */
+        .form-container {
+            margin-top: 20px;
+            background-color: #2c2c2c;
+            padding: 30px;
+            border-radius: 5px;
+        }
 
-</style>
+        .form-container input,
+        .form-container textarea {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #3c3c3c;
+            color: #e0e0e0;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .form-container textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .form-container button {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #1e88e5;
+            color: #fff;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .form-container button:hover {
+            background-color: #0d47a1;
+        }
+
+        /* Subheader at the bottom */
+        .subheader {
+            background: rgba(51, 51, 51, 0.8);
+            color: #fff;
+            padding: 1em 0;
+            text-align: center;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+    </style>
 </head>
 <body>
-    <header>
-        <nav>
-            <ul class="header-icons">
-                <li><a href="{{ url_for('index.index') }}"><img src="{{ url_for('static', filename='img/home.png') }}" alt="Home"></a></li>
-                <li><a href="{{ url_for('auth.auth') }}"><img src="{{ url_for('static', filename='img/register.png') }}" alt="Register"> Register</a></li>
+<header>
+    <nav>
+        <ul class="header-icons">
+            <li><a href="{{ url_for('index.index') }}"><img src="{{ url_for('static', filename='img/home.png') }}" alt="Home"></a></li>
+            <li><a href="{{ url_for('auth.auth') }}"><img src="{{ url_for('static', filename='img/register.png') }}" alt="Register"> Register</a></li>
                 <li><a href="{{ url_for('auth.auth') }}"><img src="{{ url_for('static', filename='img/tasks.png') }}" alt="Tasks"> Tasks</a></li>
-            </ul>
-        </nav>
-        <div class="profile-icon">
-            <a href="{{ url_for('auth.auth') }}"><img src="{{ url_for('static', filename='img/profile.png') }}" alt="Profile"> Profile</a>
-        </div>
-        {% if current_user.username %}
-        <div>
-            <h1>Welcome, {{ current_user.username }}!</h1>
-        </div>
-        {% endif %}
-    </header>
-
-    <main>
-        <form id="taskForm" class="form-container" method="POST" action="/tasks">
-            <input type="text" name="title" placeholder="Title" required>
-            <textarea name="description" placeholder="Description"></textarea>
-            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-            <button type="submit">Add Task</button>
-        </form>
-
-        <ul id="task-list">
-            <!-- Task items will be dynamically added here -->
         </ul>
-    </main>
+    </nav>
+    <div class="profile-icon">
+        <a href="{{ url_for('auth.auth') }}"><img src="{{ url_for('static', filename='img/profile.png') }}" alt="Profile"> Profile</a>
+    </div>
+    {% if current_user.username %}
+    <div>
+        <h1>Welcome, {{ current_user.username }}!</h1>
+    </div>
+    {% endif %}
+</header>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Function to add a new task
-            function addTask(task) {
-                const taskList = document.getElementById('task-list');
-                const taskItem = document.createElement('li');
-                taskItem.setAttribute('data-id', task.id);
+<main>
+    <!-- Form to create a new task -->
+    <form id="taskForm" class="form-container" method="POST" action="/tasks">
+        <input type="text" name="title" placeholder="Title" required>
+        <textarea name="description" placeholder="Description"></textarea>
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <button type="submit">Add Task</button>
+    </form>
+    <ul id="task-list">   
+        <!-- Task items will be dynamically added here -->
+    </ul>
+</main>
 
-                const taskSpan = document.createElement('span');
-                taskSpan.textContent = task.title;
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        function addTask(task) {
+            const taskList = document.getElementById('task-list');
+            const taskItem = document.createElement('li');
+            taskItem.setAttribute('data-id', task.id);
 
-                const deleteButton = document.createElement('button');
-                deleteButton.innerHTML = '&times;';
-                deleteButton.classList.add('delete-btn');
-                deleteButton.addEventListener('click', function() {
-                    taskList.removeChild(taskItem);
-                    deleteTask(task.id);
-                });
+            const taskSpan = document.createElement('span');
+            taskSpan.textContent = task.title;
 
-                const editButton = document.createElement('button');
-                editButton.textContent = 'Edit';
-                editButton.classList.add('edit-btn');
-                editButton.addEventListener('click', function() {
-                    editTask(task.id);
-                });
-
-                taskItem.appendChild(taskSpan);
-                taskItem.appendChild(deleteButton);
-                taskItem.appendChild(editButton);
-
-                taskList.appendChild(taskItem);
-            }
-
-            // Function to delete a task
-            function deleteTask(taskId) {
-                fetch(`/tasks/${taskId}`, {
-                    method: 'DELETE',
-                    headers: {
-                        'X-CSRFToken': document.querySelector('input[name="csrf_token"]').value
-                    }
-                })
-                .then(response => {
-                    if (response.ok) {
-                        document.querySelector(`[data-id="${taskId}"]`).remove();
-                    } else {
-                        throw new Error('Failed to delete task');
-                    }
-                })
-                .catch(error => console.error('Error deleting task:', error));
-            }
-
-            // Function to edit a task
-            function editTask(taskId) {
-                const taskSpan = document.querySelector(`[data-id="${taskId}"] span`);
-                const currentTitle = taskSpan.textContent;
-                const newTitle = prompt('Edit task:', currentTitle);
-                if (newTitle && newTitle !== currentTitle) {
-                    updateTask(taskId, newTitle);
-                }
-            }
-
-            // Function to update a task
-            function updateTask(taskId, newTitle) {
-                fetch(`/tasks/${taskId}`, {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRFToken': document.querySelector('input[name="csrf_token"]').value
-                    },
-                    body: JSON.stringify({ title: newTitle })
-                })
-                .then(response => response.json())
-                .then(task => {
-                    const taskSpan = document.querySelector(`[data-id="${taskId}"] span`);
-                    taskSpan.textContent = task.title;
-                })
-                .catch(error => console.error('Error updating task:', error));
-            }
-
-            // Fetch existing tasks on page load
-            function fetchTasks() {
-                fetch('/tasks')
-                .then(response => response.json())
-                .then(tasks => {
-                    const taskList = document.getElementById('task-list');
-                    taskList.innerHTML = ''; // Clear existing tasks
-                    tasks.forEach(task => addTask(task));
-                })
-                .catch(error => console.error('Error fetching tasks:', error));
-            }
-
-            fetchTasks();
-
-            // Event listener for submitting a new task via form
-            document.getElementById('taskForm').addEventListener('submit', function(event) {
-                event.preventDefault();
-                const form = event.target;
-                const formData = new FormData(form);
-                const taskTitle = formData.get('title');
-                const taskDescription = formData.get('description');
-
-                fetch(form.action, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRFToken': formData.get('csrf_token')
-                    },
-                    body: JSON.stringify({
-                        title: taskTitle,
-                        description: taskDescription
-                    })
-                })
-                .then(response => response.json())
-                .then(task => {
-                    addTask(task);
-                    form.reset();
-                })
-                .catch(error => console.error('Error adding task:', error));
+            const markDoneButton = document.createElement('button');
+            markDoneButton.innerHTML = '<i class="fas fa-check"></i>';
+            markDoneButton.classList.add('mark-done-btn', 'task-action-btn');
+            markDoneButton.addEventListener('click', function() {
+                markTaskDone(task.id);
             });
 
+            const setReminderButton = document.createElement('button');
+            setReminderButton.innerHTML = '<i class="fas fa-bell"></i>';
+            setReminderButton.classList.add('set-reminder-btn', 'task-action-btn');
+            setReminderButton.addEventListener('click', function() {
+                setReminder(task.id);
+            });
+
+            const deleteButton = document.createElement('button');
+            deleteButton.innerHTML = '&times;';
+            deleteButton.classList.add('delete-btn');
+            deleteButton.addEventListener('click', function() {
+                taskList.removeChild(taskItem);
+                deleteTask(task.id);
+            });
+
+            const editButton = document.createElement('button');
+            editButton.textContent = 'Edit';
+            editButton.classList.add('edit-btn');
+            editButton.addEventListener('click', function() {
+                editTask(task.id);
+            });
+
+            taskItem.appendChild(taskSpan);
+            taskItem.appendChild(markDoneButton);
+            taskItem.appendChild(setReminderButton);
+            taskItem.appendChild(editButton);
+            taskItem.appendChild(deleteButton);
+
+            taskList.appendChild(taskItem);
+        }
+
+        function markTaskDone(taskId) {
+            alert(`Marking task ${taskId} as done`);
+        }
+
+        function setReminder(taskId) {
+            alert(`Setting reminder for task ${taskId}`);
+        }
+
+        function deleteTask(taskId) {
+            const csrfToken = document.querySelector('input[name="csrf_token"]').value;
+            fetch(`/tasks/${taskId}`, {
+                method: 'DELETE',
+                headers: {
+                    'X-CSRFToken': csrfToken
+                }
+            })
+            .then(response => {
+                if (response.ok) {
+                    document.querySelector(`[data-id="${taskId}"]`).remove();
+                } else {
+                    throw new Error('Failed to delete task');
+                }
+            })
+            .catch(error => console.error('Error deleting task:', error));
+        }
+
+        function editTask(taskId) {
+            const taskSpan = document.querySelector(`[data-id="${taskId}"] span`);
+            const currentTitle = taskSpan.textContent;
+            const newTitle = prompt('Edit task:', currentTitle);
+            if (newTitle && newTitle !== currentTitle) {
+                updateTask(taskId, newTitle);
+            }
+        }
+
+        function updateTask(taskId, newTitle) {
+            const csrfToken = document.querySelector('input[name="csrf_token"]').value;
+            fetch(`/tasks/${taskId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrfToken
+                },
+                body: JSON.stringify({ title: newTitle })
+            })
+            .then(response => response.json())
+            .then(task => {
+                const taskSpan = document.querySelector(`[data-id="${taskId}"] span`);
+                taskSpan.textContent = task.title;
+            })
+            .catch(error => console.error('Error updating task:', error));
+        }
+
+        function fetchTasks() {
+            fetch('/tasks')
+            .then(response => response.json())
+            .then(tasks => {
+                const taskList = document.getElementById('task-list');
+                taskList.innerHTML = '';
+                tasks.forEach(task => addTask(task));
+            })
+            .catch(error => console.error('Error fetching tasks:', error));
+        }
+
+        fetchTasks();
+
+        document.getElementById('taskForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const form = event.target;
+            const formData = new FormData(form);
+            const taskTitle = formData.get('title');
+            const taskDescription = formData.get('description');
+
+            fetch(form.action, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': formData.get('csrf_token')
+                },
+                body: JSON.stringify({
+                    title: taskTitle,
+                    description: taskDescription
+                })
+            })
+            .then(response => response.json())
+            .then(task => {
+                addTask(task);
+                form.reset();
+            })
+            .catch(error => console.error('Error adding task:', error));
         });
-    </script>
-    <footer class="subheader">
-        <h2><i>{{ current_user.username }}'s Tasks</i></h2>
-        <i><a href="{{ url_for('auth.logout') }}" class="logout-link">Logout</a></i>
-    </footer>
+
+    });
+</script>
+<footer class="subheader">
+    <h2><i>{{ current_user.username }}'s Tasks</i></h2>
+    <i><a href="{{ url_for('auth.logout') }}" class="logout-link">Logout</a></i>
+</footer>
 </body>
 </html>

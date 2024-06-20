@@ -9,9 +9,9 @@ profile_bp = Blueprint('profile', __name__)
 def profile():
     return render_template('profile.html', user=current_user)
 
-@profile_bp.route('/logout')
+@profile_bp.route('/logout_profile')  # Rename to avoid route conflict
 @login_required
-def logout():
+def logout_profile():
     logout_user()
     flash('Logged out successfully', 'success')
     return redirect(url_for('index.home'))
