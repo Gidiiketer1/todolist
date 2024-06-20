@@ -1,13 +1,11 @@
-<!-- backend/templates/auth.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login and Register</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <style>
-        /* Your CSS styles */
+        /* Global styles */
         body {
             font-family: Arial, sans-serif;
             background-image: url('https://res.cloudinary.com/dqpjtdwi1/image/upload/v1717755159/dark-gray-wooden-plank-texture_ge30ua.jpg');
@@ -19,6 +17,7 @@
             margin: 0;
             padding: 0;
         }
+
         header {
             background: rgba(51, 51, 51, 0.8);
             color: #fff;
@@ -53,10 +52,10 @@
         nav ul li a {
             color: #fff;
             text-decoration: none;
-            cursor: pointer; /* Change cursor to pointer on hover */
-            display: flex; /* Make the link flex container */
-            align-items: center; /* Align items vertically */
-            transition: color 0.3s ease; /* Add transition for smooth color change */
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            transition: color 0.3s ease;
         }
 
         .nav-icon {
@@ -66,7 +65,7 @@
 
         .nav-icon:hover,
         .nav-icon:hover img {
-            color: blue; /* Change color to blue on hover */
+            color: blue;
         }
 
         .profile-icon {
@@ -75,12 +74,12 @@
 
         .container {
             max-width: 340px;
-            margin: 50px auto; /* Centering the container */
+            margin: 50px auto;
             padding: 20px;
             border: 1px solid #ccc;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            background-color: rgba(230, 247, 255, 0.9); /* Light blue background with more transparency */
+            background-color: rgba(230, 247, 255, 0.9);
             position: relative;
         }
 
@@ -102,7 +101,7 @@
             border: 1px solid #ccc;
             border-radius: 5px;
             font-size: 17px;
-            width: calc(100% - 32px); /* Adjusting width for icon/button */
+            width: calc(100% - 32px);
         }
 
         .show-password {
@@ -110,16 +109,16 @@
             top: 50%;
             right: 5px;
             transform: translateY(-50%);
-            background-color: #fff; /* Background color */
-            border: 1px solid #ccc; /* Border */
-            border-radius: 5px; /* Border radius */
-            padding: 5px 10px; /* Padding */
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 5px 10px;
             cursor: pointer;
-            color: #555; /* Icon color */
+            color: #555;
         }
 
         .show-password:hover {
-            color: #333; /* Icon color on hover */
+            color: #333;
         }
 
         .submit-btn,
@@ -127,17 +126,41 @@
             padding: 15px 25px;
             background-color: orange;
             color: white;
-            border: none;
+            border: blue;
             border-radius: 15px;
             cursor: pointer;
             font-size: 16px;
             transition: background-color 0.3s ease;
             width: 100%;
             margin-top: 15px;
+            position: relative;
+            display: flex;
+            z-index: 1;
+            transition: all 0.18s ease;
+            backdrop-filter: blur(15px);
+            backface-visibility: shown;
+            color: maroon; /* Updated text color for visibility */
         }
 
-        .submit-btn:hover,
-        .toggle-btn button:hover {
+        .submit-btn:before {
+            content: 'wow';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 50%;
+            height: 25%;
+            background: rgba(255, 255, 255, 0.1);
+            z-index: -1;
+            animation: rotate 2s infinite linear;
+            filter: maroon(5px);
+        }
+
+        .submit-btn:hover:before,
+        .toggle-btn button:hover:before {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .submit-btn:hover {
             background-color: darkorange;
         }
 
@@ -171,6 +194,15 @@
             width: 100%;
             margin-top: 20px;
         }
+
+        @keyframes rotate {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
     </style>
 </head>
 <body>
@@ -199,7 +231,7 @@
             <button type="button" class="show-password" onclick="togglePassword()">Show</button>
         </div>
         <div class="btn-container">
-            <button type="submit" class="submit-btn">Login</button>
+            <button type="submit" class="submit-btn btn btninner">Login</button>
         </div>
     </form>
     <div class="toggle-btn">
@@ -226,11 +258,13 @@
             action.value = 'register';
             document.getElementById('username').style.display = 'block';
             registerBtn.textContent = 'Register';
+            registerBtn.classList.add('btninner');
             toggleBtn.textContent = 'Switch to Login';
         } else {
             action.value = 'login';
             document.getElementById('username').style.display = 'none';
             registerBtn.textContent = 'Login';
+            registerBtn.classList.remove('btninner');
             toggleBtn.textContent = 'Switch to Register';
         }
     }
